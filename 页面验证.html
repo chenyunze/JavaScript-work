@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			#box{width: 500px;height: 500px;margin: 50px auto;border: 1px solid #000;border-radius: 10px;}
+			span{margin-left: 140px;line-height: 100px;}
+			input{margin-left: 30px;border: 3px #ccc solid;border-radius: 10px;}
+			#btn{width: 200px;height: 40px;margin:0 160px;}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<span>QQ :</span><input type="text" name="" id="txtQ"  /></br>
+			<span>邮箱 :</span><input type="text" name="" id="txtM" /></br>
+			<span>手机号码 :</span><input type="text" name="" id="txtP"  /></br>
+			<span>出生年月 :</span><input type="text" name="" id="txtD"  /></br>
+			<input type="button" name="" id="btn" value="提交" />
+		</div>
+		<script type="text/javascript">
+			var txtQ = document.getElementById('txtQ');
+			var txtM = document.getElementById('txtM');
+			var txtP = document.getElementById('txtP');
+			var txtD = document.getElementById('txtD');
+			var btn = document.getElementById('btn');
+			txtQ.oninput = function(){
+				
+				//console.log(txtQ.value)
+				//qq号码非0开头，5-11位
+				if(/^[^0]\d{4,10}$/g.test(txtQ.value)){
+					txtQ.style.borderColor = 'green'
+				}else{
+					txtQ.style.borderColor = ''
+				}
+				//空，清除颜色
+				if(txtQ.value == ''){
+					txtQ.style.borderColor = ''
+				}
+				yanzheng()
+			}
+			txtM.oninput = function(){
+				
+				//console.log(txtM.value)
+				//邮箱 字母 数字下划线 5-19位   (  数字下划线1-19 .  )   1-2次
+				if(/^\w{5,19}@(\w{1,19}\.){1,2}[a-z]+$/.test(txtM.value)){
+					txtM.style.borderColor = 'green'
+				}else{
+					txtM.style.borderColor = ''
+				}
+				//空，清除颜色
+				if(txtM.value == ''){
+					txtM.style.borderColor = ''
+				}
+				yanzheng()
+			}
+			txtP.oninput = function(){
+				
+				if(/^1[3|5|7|8][0-9]{9,9}$/.test(txtP.value)){
+					txtP.style.borderColor = 'green'
+				}else{
+					txtP.style.borderColor = ''
+				}
+				//空，清除颜色
+				if(txtP.value == ''){
+					txtP.style.borderColor = ''
+				}
+				yanzheng()
+			}
+			//获取当前时间
+			//var date = new Date();
+			//当前年份
+			//var year = date.getFullYear();
+			//年份转字符串
+			//var yStr = String(year);
+			
+			
+			//                     验证年份 xxxx年xx月xx日
+			//var re = new RegExp('(1[0-9]{3,3})|(2[\\d]{0,yStr[1]}[\\d]{})')
+			var re = new RegExp('^\\d{4,4}'+'\\D+'+'\\d{1,2}'+'\\D+'+'\\d{1,2}'+'\\D*$');
+			txtD.oninput = function(){
+				//console.log(re.test(txtD.value))//验证的入口，符合此条件才能进入处理阶段。
+				if(re.test(txtD.value)){
+					var t = txtD.value.replace(/\D+/g,'/').split('/')//把输入的处理，切开
+					var sY = t[0];//0 设置年     1 设置月份   2 设置日期   
+					var sM = t[1];//要设置的 时间
+					var sD = t[2];
+					//console.log(nD)
+					var date = new Date();
+					var date2 = new Date();
+					var nY = date.getFullYear();
+					var nM = date.getMonth();
+					var nD = date.getDate();
+					//console.log(nY)
+					date.setFullYear(sY);
+					date.setMonth(sM-1);
+					date.setDate(sD);
+					//console.log(date2-date)//正值就是之前的时间，符合。
+					var Tcha = date2 - date;
+					var mY = date.getFullYear();
+					var mM = date.getMonth()+1;
+					var mD = date.getDate();
+					if(Tcha>0){
+						if(sY==mY&&sM==mM&&sD==mD){
+							txtD.style.borderColor = 'green'
+						}else{
+							txtD.style.borderColor = ''
+						}
+					}else{
+						txtD.style.borderColor = ''
+					}
+					console.log(txtD.value)
+					
+				}
+				if(txtD.value == ''){
+					txtD.style.borderColor = ''
+				}
+				
+		//以此设置出日期再去获取出来年月日，比较这两个年月日，如果有改变，证明此日期不存在。但是应该写一个验证  设置时间是否是已经过去的时间。
+//				if(txtD.value){
+//					txtD.style.borderColor = 'green'
+//				}else{
+//					txtD.style.borderColor = ''
+//				}
+//				if(txtD.value == ''){
+//					txtD.style.borderColor = ''
+//				}
+				yanzheng()
+			}
+			function yanzheng(){
+				if(txtQ.style.borderColor == 'green'&&txtM.style.borderColor == 'green'&&txtP.style.borderColor == 'green'&&txtD.style.borderColor == 'green'){
+					btn.onclick = function(){
+						txtD.value = '';
+						txtP.value = '';
+						txtM.value = '';
+						txtQ.value = '';
+						open('http://www.baidu.com','_self')
+					}
+				}else{
+					btn.onclick = function(){
+						alert('请正确填写项目')
+					}
+				}
+			}
+			yanzheng()
+		</script>
+	</body>
+</html>
