@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.active{
+				background: yellow;
+			}	
+			#box div{
+				width:200px;
+				height: 200px;
+				border: 1px solid #000;
+				display: none;
+			}
+			#box div.show{
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<input type="button" value="按钮一" class="active" />
+			<input type="button" value="按钮二" />
+			<input type="button" value="按钮三" />
+			<div class="show">第一块内容</div>
+			<div>第二块内容</div>
+			<div>第三块内容</div>
+		</div>
+		<script type="text/javascript">
+			//传入参数->id
+			
+			function Tab(id){
+				this.box = document.getElementById(id);
+				this.btn = this.box.getElementsByTagName('input');
+				this.divs = this.box.getElementsByTagName('div');
+			}
+			//要干的一些事情
+			Tab.prototype.Events = function(){
+				var _this = this;//这里存储了 this为_this, this 指的就是 最大的盒子
+				for(var i=0;i<this.btn.length;i++){
+					this.btn[i].index = i;
+					this.btn[i].onclick = function(){
+						//console.log(_this)
+						//_this.box.style.background = 'red'
+						_this.change(this);
+					}
+				}
+			}
+			//这里是 点击了input后会发生的改变，包括大清洗和当前className的改变以及DIV的改变
+			Tab.prototype.change = function(that){
+				for(var i=0;i<this.btn.length;i++){
+					this.btn[i].className = '';
+					this.divs[i].className = '';
+				}
+				that.className = 'active';
+				console.log(that);
+				this.divs[that.index].className = 'show'
+			}
+			var t1 = new Tab('box');
+			t1.Events();
+			//console.log(t1)
+		</script>
+	</body>
+</html>

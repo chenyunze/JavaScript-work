@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			 	属性：
+				 	div.id
+				 	div.index
+				 	div.innerHTML
+				 	
+			 	
+			 		属性前面是有主的
+			 		对象（obj arr function） 下才能有属性
+			 	
+			 	变量 
+			 		var arr   前面是没有对象的
+			 	方法
+				 	obj.fn = function(){
+				 		alert(this);
+				 	}
+				 	方法前面有主，默认this指向主
+				 函数  
+				 	function fn（）{}、
+				 	函数前没有主，this指向window
+				 	var obj = {
+				 		name:'hehe'
+				 	}
+				 	obj['name']
+				 	
+			 	
+			 * 
+			 * 
+			 * 
+			 * 
+			 * */
+//			var obj = {
+//				name:'hehe'
+//			}
+//			console.log(obj.name)
+			var num = 10;
+			num++;
+			var arr = [1,2,3,4];
+			arr.num = 10;
+			//console.log(arr.num)
+			var num2 = 10;
+			//num2.abc = 10;
+			//console.log(num2.abc) 
+//			arr.fn = function(){
+//				alert(this)
+//			}
+//			arr.fn()
+			function Teacher(name,age,say){
+				var obj = {
+					name:name,
+					age:age,
+					say:say
+				}
+				return obj;
+			}
+			//console.log(Teacher('abc',20,'111'))
+			
+			
+			
+			
+			function Teacher2(name,age){
+				var obj = {
+					name:name,
+					age:age,
+					say(){
+						alert('2222')
+					}
+				}
+				return obj;
+			}
+//			var t1 = Teacher2('222',20,)
+//			t1.say()
+			/*
+			 创建 t1 = Teacher2（）。。。。。
+			 t1调用say().....
+			  */
+			 
+			function person(name,age){
+				var obj = {};
+				obj.name = name;
+				obj.age = age;
+				obj.say = function(){
+					console.log(this.name)//alert('我的名字叫'+this.name);对比课件错了
+				}
+				return obj;
+			}
+			var t123 = person('chen',12);
+			t123.say();
+		</script>
+	</body>
+</html>
