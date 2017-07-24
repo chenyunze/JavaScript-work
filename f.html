@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+<style>
+	
+#box{
+	width: 100px;
+	height: 100px;
+	background: red;
+	position: absolute;
+	left:0;
+	top:0;
+}
+</style>
+</head>
+<body>
+	dsadsa
+	<div id="box">
+		
+	</div>
+<script type="text/javascript">
+	
+	function Drag(id){
+		//this.box = document.getElementById(id);
+		
+		this.disX = 0;
+		this.disY = 0;
+		
+		this.l = 0;
+		this.t = 0;
+		
+		this.box = document.getElementById(id);
+		
+		this.init();
+	}
+	//init初始化函数 这里面应该有什么0-0在这里按下鼠标 onmousedown 
+	Drag.prototype.init = function(){
+		//console.log(this)
+		var _this = this;
+		this.box.onmousedown = function(ev){
+			_this.down(ev);
+			return false;
+		}
+	}
+	Drag.prototype.down = function(ev){
+		//console.log(this)//Drag
+		var _this = this;
+		this.disX = ev.clientX - this.box.offsetLeft;
+		this.disY = ev.clientY - this.box.offsetTop;
+		document.onmousemove = function(ev){
+			//console.log(_this)  //this 为document  ——this 为Drag  应该是Drag的 style
+			_this.move(ev);
+		}
+		document.onmouseup = function(ev){
+			_this.up(ev);
+		}
+	}
+	Drag.prototype.move = function(ev){
+		this.l = ev.clientX - this.disX;
+		this.t = ev.clientY - this.disY;
+		this.limit();
+		this.box.style.left = this.l+'px'
+		this.box.style.top = this.t+'px'
+	}
+	Drag.prototype.up = function(){
+		document.onmousemove = document.onmouseup = null;
+	}
+	Drag.prototype.limit = function(){
+		if(this.l<0){
+			this.l = 0
+		}else if(this.l>window.innerWidth-this.box.offsetWidth){
+			this.l = window.innerWidth-this.box.offsetWidth
+		}
+		if(this.t<0){
+			this.t = 0
+		}else if(this.t>window.innerHeight-this.box.offsetHeight){
+			this.t = window.innerHeight-this.box.offsetHeight
+		}
+	}
+	var t1 = new Drag('box');
+	//console.log(t1)
+</script>
+</body>
+</html>

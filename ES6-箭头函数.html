@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			/*
+			 箭头函数的 this 默认永远指向定义的父级
+			 时间绑定函数不适用箭头函数
+			 * 
+			 * 
+			 * */
+//			function fn(){
+//				alert(1)
+//			}
+//			fn()
+
+
+
+
+
+//			var fn = () => alert(1) //箭头函数最基础写法 这个的()必须要有
+//			fn()
+			
+			
+			
+			
+			
+//			var fn = () => {
+//				alert(123)
+//			}
+//			fn();
+
+			
+			
+//			function fn(){
+//				return 5;
+//			}
+//			var fn = () =>5;   两种等价
+
+
+//			var fn = () =>{
+//				var a = 1+1;
+//				var b = a+2;
+//				alert(b);
+//			}
+//			fn(); //4
+
+
+
+			//var fn = (a) =>a;//定义一个fn的函数，传入一个a的形参 return a
+			// var fn = a => a;  //当只有一个参数时候可以省略括号。多个参数或者没有参数不可以省略括号
+			
+//			var fn = (a,b) =>a+b;
+//			var a = fn(5,6)
+//			console.log(a) //11
+			
+			
+			
+			
+//			document.onclick = fn2;
+//			
+//			function fn2(){
+//				var fn = () =>alert(this);
+//				function fn3(){
+//					alert(this);
+//					fn();
+//				}
+//				fn3();
+//			}//window    和    document
+			
+			
+			
+//			document.onclick = () => {
+//				
+//				alert(this);
+//				
+//			}    this 是window
+		</script>
+	</body>
+</html>
