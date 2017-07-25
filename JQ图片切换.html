@@ -1,0 +1,152 @@
+<!DOCTYPE html >
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+	#box{
+		width: 875px;
+		height: 553px;
+		background: url(img/bg.png) no-repeat;
+		margin: 0 auto;
+		position: relative;
+	}
+	img{
+		position: absolute;
+		top: 114px;
+		height: 245px;
+		cursor: pointer;
+	}
+	#box img:nth-of-type(1){
+		width:448px;
+		left: 49px;
+	}
+	#box img:nth-of-type(2){
+		width: 248px;
+		left:559px;
+	}
+	i{
+		position: absolute;
+		bottom: 143px;
+		font-weight: bold;
+	}
+	#box i:nth-of-type(1){
+		left: 49px;
+	}
+	#box i:nth-of-type(2){
+		right: 297px;
+	}
+	a{
+		position: absolute;
+		top:54px;
+		width: 60px;
+		height: 20px;
+	}
+	#box a:nth-of-type(1){
+		left:23px;
+	}
+	#box a:nth-of-type(2){
+		left: 100px;
+	}
+	p{
+		height: 20px;
+		width: 200px;
+		position: absolute;
+		bottom: 150px;
+		text-align: center;
+	}
+	#box p:nth-of-type(1){
+		left: 136px;
+	}	
+	#box p:nth-of-type(2){
+		width: 130px;
+		left: 634px;
+	}
+</style>
+</head>
+
+<body>
+	<div id="box">
+		<a href="javascript:;" class="left"></a>
+		<a href="javascript:;" class="right"></a>
+		<img src="" alt="" class="left" id="imgleft"/>
+		<img src="" alt="" class="right" id="imgright"/>
+		<i class="left"></i>
+		<i class="right"></i>
+		<p class="left"></p>
+		<p class="right"></p>
+	</div>
+</body>
+</html>
+<script src="js/jquery-3.2.1.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	
+	//左边图片
+	var arrLeft = ['img/0.jpg','img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg'];
+	//右边图片
+	var arrRight = ['img/2.jpg','img/3.jpg','img/4.jpg'];
+	//左边文字
+	var arrTxt1 = ['左一','左二','左三','左四','左五'];
+	//右边文字
+	var arrTxt2 = ['右一','右二','右三'];
+	//控制左边图片
+	var n = 0;
+	//控制右边图片
+	var m = 0;
+	function showleft(num){
+		$('#imgleft').attr('src',arrLeft[num]);
+		//console.log($('i')[0])
+		$('i:eq(0)').html((num+1)+'/'+arrLeft.length);
+		$('p:eq(0)').html(arrTxt1[num])
+	}
+	function showright(num){
+		$('#imgright').attr('src',arrRight[num]);
+		$('i:eq(1)').html((num+1)+'/'+arrRight.length);
+		$('p:eq(1)').html(arrTxt2[num])
+	}
+	showleft(n);
+	showright(m);
+	//console.log()
+	$('a:eq(1)').click(function(){
+		n++;
+		m++;
+		if(n==arrLeft.length){
+			n=0;
+		}
+		if(m==arrRight.length){
+			m=0;
+		}
+		showleft(n);
+		showright(m);
+	})
+	$('a:eq(0)').click(function(){
+		n--;
+		m--;
+		if(n<0){
+			n=arrLeft.length-1
+		}
+		if(m==-1){
+			m=arrRight.length-1
+		}
+		showleft(n);
+		showright(m);
+	})
+	$('img:eq(0)').click(function(){
+		n++;
+		if(n==arrLeft.length){
+			n=0;
+		}
+		showleft(n)
+	})
+	$('img:eq(1)').click(function(){
+		m++;
+		if(m==arrRight.length){
+			m=0;
+		}
+		showright(m)
+	})
+//	showleft(0);
+//	showright(0);
+//	$('i')[0]  第一个i
+	console.log()
+</script>
