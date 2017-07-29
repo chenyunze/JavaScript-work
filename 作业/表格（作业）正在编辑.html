@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+<style type="text/css">
+body,
+h1 {
+	margin: 0;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+input {
+	outline: none;
+}
+table {
+	border-collapse: collapse;
+	border: #bbb;
+}
+body {
+	width: 100%;
+	height: 100%;
+	/*background: url(img/2.jpg) no-repeat;*/
+}
+.tBody {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-top: 30px;
+	padding: 20px 30px 40px;
+	background-color: rgba(255,255,255,.6);
+}
+.title {
+	text-align: center;
+	color: #fca113;
+	text-shadow: 0 0 2px #fcf913;
+	line-height: 50px;
+}
+table {
+	background-color: #fff;
+}
+th {
+	background-color: #ddd;
+}
+tr {
+	height: 30px;
+}
+ul {
+	padding: 5px 0;
+	width: 600px;
+	text-align: center;
+}
+td{
+	text-align: center;
+}
+td input {
+	margin: 0 2px;
+}
+li {
+	padding: 5px 0;
+	overflow: hidden;
+}
+label {
+	display: inline-block;
+}
+input[type="text"] {
+	border: 1px solid #ccc;
+	width: 80px;
+	height: 20px;
+}
+/*.active {
+	background-color: #f7cb75;
+}*/
+/*#tab tbody tr:hover {
+	background-color: #f7cb75;
+}*/
+</style>
+</head>
+<body>
+<section class="tBody">
+	<h1 class="title"></h1>
+	<ul id="header">
+		<li class="addPre">
+			<label>名字： <input type="text" name="" /></label>
+			<label>年龄： <input type="text" /></label>
+			<input type="button" value="添加" />
+		</li>
+		<li>
+			<span>排序</span>
+			<select>
+				<option value="price">年龄</option>
+				<option value="id">编号</option>
+			</select>
+			<select>
+				<option value='2'>从高到底</option>
+				<option value='1'>从低到高</option>
+			</select>
+			<input type="button" value="提交" />
+			<input type="button" value="批量删除" />
+		</li>
+	</ul>
+	<table id="tab" width="600" align="center" border="1">
+		<thead>
+			<th>全选<input type="checkbox" id="checkAll"></th>
+			<th index="id">编号</th>
+			<th>商品</th>
+			<th index="price">年龄</th>
+			<th>操作</th>
+		</thead>
+		<tbody>
+			<!--<tr>
+				<td><input type="checkbox"></td>
+				<td>1</td>
+				<td>露露</td>
+				<td>12</td>
+				<td>
+					<input type="button" value="删除"/>
+					<input type="button" value="上移">
+					<input type="button" value="下移">
+				</td>
+			</tr>-->
+		</tbody>
+	</table>	
+</section>
+</body>
+<script src="jquery-3.2.1.js"></script>
+<script src="data.js" type="text/javascript" charset="utf-8"></script>
+<script src="tools.js" type="text/javascript" charset="utf-8"></script>
+<script>
+var arr = [];
+//show函数，万恶之源啊-----------------------
+function show(data){
+	var t ;
+	for(var i=0;i<data.length;i++){
+//		console.log(data)
+		$('<tr></tr>').appendTo($('tbody'))
+		t += `<tr>
+				<td><input type="checkbox" num = ${i} /></td>
+				<td>${data[i].id}</td>
+				<td>${data[i].name}</td>
+				<td>${data[i].price}</td>
+				<td>
+					<input type="button" value="删除" num = ${i} />
+					<input type="button" value="上移" num = ${i} />
+					<input type="button" value="下移" num = ${i} />
+				</td>
+			</tr>`
+	}
+	
+	//如果html内的为undefined，会发生意外情况：根本不执行，所以要判断，当t为undefined，就是data里没数据，那就直接清空tbody
+	if(!t){
+		$('tbody').html('')
+	}
+	$('tbody').html(t)
+	//带有 zhenjia 的数据被选中
+	for(var i=0;i<$('tbody').find($('input[type="checkbox"]')).length;i++){
+		if(data[i].zhenjia == 1){
+			$('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('checked',true)
+		}
+		//console.log($('tbody').find($('input[type="checkbox"]')).prop('checked',true))
+	}
+	$('tbody').find($('input[type="button"]')).click(function(){
+		var m = $(this).attr('num');
+		if($(this).attr('value')==='删除'){
+			//删除 通过自定义的num值来判断点击的到底是 删除的第几个按钮，通过数组方法来删除数据
+			data.splice(m,1);
+			show(data)//这个show必须放在判断全选之前，不然用旧的渲染判断会滞后
+			
+			checkedAll();
+			console.log(data[0])
+			if(!data[0]){
+				$('thead').find($('input[type="checkbox"]')).prop('checked',false)
+			}
+		}
+		if($(this).attr('value')==='上移'){
+			//console.log(m)
+			//上移 通过自定义属性判断判断点击的到底是上移的第几个按钮，通过数组方法来上移数据。已经是第一个的就弹窗提示
+			if(m==0){//已经位于第一位不能再上移
+				alert('已经位于第一位不能再上移')
+			}else{
+				[data[Number(m-1)],data[Number(m)]] = [data[Number(m)],data[Number(m-1)]]
+				//[data[Number(m)],data[Number(m+1)]] = [data[Number(m+1)],data[Number(m)]]
+			}
+			show(data)
+		}
+		if($(this).attr('value')==='下移'){
+			//下移
+			if(m==data.length-1){//已经位于第一位不能再上移
+				alert('已经位于最后一位不能再下移')
+			}else{
+				var obj = data.splice(m,1)[0];
+				data.splice(Number(m)+1,0,obj)
+			}
+			show(data)
+		}
+	})
+	//console.log($('tbody').find($('input[type="checkbox"]')))
+
+	for(var i=0;i<$('tbody').find($('input[type="checkbox"]')).length;i++){
+		$('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).click(function(){
+			checkedAll();
+//			if($('thead').find($('input[type="checkbox"]')).prop('checked')==true){
+//				arr.push()
+//			}
+			for(var i=0;i<$('tbody').find($('input[type="checkbox"]')).length;i++){
+				if($('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('checked') == true){
+					//点击，如果一个数据之前没被选中，那么它被选中的时候要在数组中给对应的数据应该加上一个 zhenjia:1，反之，删除zhenjia:1，总之就是把选中的做标记
+					data[i].zhenjia = 1;
+				}else if($('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('checked') == false){
+					data[i].zhenjia = 0;
+					
+				}
+			}
+		})
+	}
+}
+
+//提交排序
+$('input[value="提交"]').click(function(){
+	//console.log($('select:eq(0)').prop('value')) 依据
+	//console.log($('select:eq(1)').prop('value'))  规则
+	Sort(data,$('select:eq(0)').prop('value'),$('select:eq(1)').prop('value'))
+	show(data);
+})
+//$('option[value="2"]')//高到低
+//$('option[value="1"]')//低到高
+//$('option[value="price"]')//年龄
+//$('option[value="id"]')//编号
+
+
+//初始化，打开页面把数据渲染出来等待着你观赏
+show(data);
+
+//添加数据，更丰富数据。添加数据时，编号唯一，即使是删除过的数据的编号也不能复用
+//console.log($('input[type="text"]:eq(0)'))//输入框
+//console.log($('input[value="添加"]'))//添加按钮
+//点击添加后，遍历数组找到当前可用最大ID
+var max = FindID(data);
+$('input[value="添加"]').click(function(){
+	var id = ++max;
+	var j ={
+		'id' : id,
+        'name' : $('input[type="text"]:eq(0)').val(),
+        'price' : $('input[type="text"]:eq(1)').val(),
+        'zhenjia':0
+	}
+	data.push(j);
+	show(data);
+	$('input[type="text"]:eq(0)').val('');
+	$('input[type="text"]:eq(1)').val('');
+})
+
+//全选之战
+$('thead').find($('input[type="checkbox"]')).click(function(){
+	if($(this).prop('checked')==false){
+		for(var i=0;i<data.length;i++){
+			data[i].zhenjia = 0;
+			$('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('checked',false)
+		}
+	}else{
+		for(var i=0;i<data.length;i++){
+			data[i].zhenjia = 1;
+			$('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('checked',true)
+		}
+	}
+	//console.log(data)
+})
+//批量删除
+$('input[value="批量删除"]').click(function(){
+	for(var i=0;i<$('tbody').find($('input[type="checkbox"]')).length;i++){
+		if($('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('checked')==true){
+			data.splice($('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('num'),1)
+		}
+	}
+	show(data)
+})
+</script>
+</html>
