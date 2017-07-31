@@ -163,6 +163,10 @@ function show(data){
 		}
 		//console.log($('tbody').find($('input[type="checkbox"]')).prop('checked',true))
 	}
+	
+	//变色
+	$('tbody tr:even').css('background','coral')
+
 	$('tbody').find($('input[type="button"]')).click(function(){
 		var m = $(this).attr('num');
 		if($(this).attr('value')==='删除'){
@@ -269,14 +273,25 @@ $('thead').find($('input[type="checkbox"]')).click(function(){
 	}
 	//console.log(data)
 })
+//console.log($('tbody').find($('input[type="checkbox"]:eq(1)')).attr('num'))
+//console.log($('tbody').find($('input[type="checkbox"]:eq(1)')).prop('checked')==true)
 //批量删除
 $('input[value="批量删除"]').click(function(){
+	var arrs = [];
 	for(var i=0;i<$('tbody').find($('input[type="checkbox"]')).length;i++){
 		if($('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('checked')==true){
-			data.splice($('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).prop('num'),1)
+			arrs.push(Number($('tbody').find($('input[type="checkbox"]:eq('+(i+1)+')')).attr('num')))
 		}
 	}
-	show(data)
+	arrs.sort(function(a,b){
+		return b-a;
+	})
+	//console.log(arrs);
+	for(var i=0;i<arrs.length;i++){
+		data.splice(arrs[i],1)
+	}
+	//console.log(data)
+	show(data);
 })
 </script>
 </html>
