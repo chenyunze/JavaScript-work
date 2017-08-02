@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		用户名:<input type="text" id="txt"  />
+		<script type="text/javascript">
+			/*
+			通过浏览器的url访问的地址，只要每次访问就会把这个地址给缓存下来，下次访问直接走缓存
+			下一次访问同一个地址不会再进行HTTP请求了，大大减少了服务器压力
+		当有些时候后端改的东西因为有缓存机制，再次刷新页面的时候依然显示之前的内容。
+		解决方法，只要不是同一个地址就ok   常规方法加个    ?qwedsa随机的东西
+		enctype 编码
+		
+		
+		
+		
+		
+		bug：ajax的status 专门查看HTTP状态码值            html是怎样连接的    http权威指南      
+			1	开头	消息		100 101
+			2	开头	成功  		200-207 成功的
+			3	开头	重定向	www.1.com-->www.1p.com 重定向   304也是成功的
+			4	开头	请求出错		404 not found 服务器上没有
+			5	开头	服务器问题	
+			6	开头	服务器问题
+			
+			IE	版本不支持const let，用var
+				onload	在IE9及以上才会被触发	。
+			 在所有浏览器都支持onreadystatechange 
+			 当服务器进行响应的时候，每当完成一个步骤就会触发一个这个事件。有5个步骤（发送到服务器处理完成）
+			各个步骤都是用0-4表示，但是0监控不到的。不管它进行到几，只要到了4就说明服务器接收并且响应了完成了。
+			onload 通过  ajax的readystate 输出第几步；
+			
+			
+			onreadystatechange      alert (ajax.readyState)
+			
+			XMLHttpRequest 对象的三个重要属性
+				1。监听事件	
+						onreadystatechange
+				2。执行的步骤
+						4代码表示响应已经就绪
+				3。status
+						状态码
+			ajax.onreadystatechange = function(){       、、、
+				alert(ajax.readyState)					**这个放在send的前面与后面能多监听一步但是意义不大，**
+			}											**只有弹出步骤四才算是请求完毕**
+			
+			
+			ajax.onreadystatechange = function(){
+				if(ajax.ready.State == 4){
+					if(状态码判断){
+						成功
+					}else{
+						失败
+					}
+				}
+			}
+			
+			*/
+		</script>
+	</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{
+				font-size: 20px;
+				line-height: 30px;
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<input type="text" placeholder="输入姓名以查找" id="user"/></br>
+		<input type="button" value="搜索" id="btn"/>
+		<script src="jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$('#btn').click(function(){
+				//console.log($('#user').val())
+				$.ajax({
+					url:'php/ajax.php',
+					data:{
+						user:$('#user').val()
+					},
+					dataType:'json',
+					success:function(data){
+						//console.log(data)	   //code:1 data:"查无此人！"      0   对象
+						if(data.code){
+							//没这个人
+							alert(data.data);
+						}else{
+							//有这个人
+							console.log(data.data.name)
+							var div = document.createElement('div');
+							div.innerHTML += '我叫'+data.data.name+',今年'+data.data.age+'岁,爱好:'+data.data.hobby+',我想说:'+data.data.info+'!!';
+							document.documentElement.appendChild(div)
+						}
+					}
+				})
+				$('#user').val('')
+			})
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>
