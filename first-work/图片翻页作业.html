@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+			body,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			dl,
+			dt,
+			dd,
+			p,
+			ul,
+			li {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body {
+				font-size: 12px;
+				font-family: "微软雅黑";
+			}
+			
+			ol,
+			ul,
+			li {
+				list-style: none;
+			}
+			
+			a {
+				text-decoration: none;
+				display: block;
+			}
+			
+			img {
+				border: 0;
+			}
+			
+			.bg {
+				width: 1000px;
+				height: 800px;
+				background: url(img/图片切换综合实例.png);
+				margin: 50px auto;
+				position: relative;
+			}
+			
+			.content {
+				width: 680px;
+				height: 505px;
+				position: absolute;
+				border-radius: 20px;
+				left: 160px;
+				top: 152px;
+				background: #ffffff;
+			}
+			
+			.con {
+				width: 560px;
+				height: 410px;
+				background: #000000;
+				position: absolute;
+				left: 46px;
+				top: 46px;
+			}
+			
+			.lie {
+				width: 6px;
+				height: 60px;
+				position: absolute;
+				left: 20px;
+				top: 222px;
+			}
+			
+			.miao {
+				width: 50px;
+				height: 58px;
+				position: absolute;
+				right: 15px;
+				top: 227px;
+			}
+			
+			#xun {
+				width: 128px;
+				height: 34px;
+				border: 1px solid #c6c3c3;
+				position: absolute;
+				left: 149px;
+				top: 15px;
+				background: #FFFFFF;
+				color: #000000;
+			}
+			
+			#sun {
+				width: 128px;
+				height: 34px;
+				border: 1px solid #c6c3c3;
+				position: absolute;
+				left: 278px;
+				top: 15px;
+				background: #000000;
+				color: #FFFFFF;
+			}
+			
+			.xia {
+				width: 560px;
+				height: 310px;
+				position: absolute;
+				top: 95px;
+			}
+			
+			.tu {
+				width: 550px;
+				height: 310px;
+				position: absolute;
+				left: 5px;
+			}
+			
+			#prve {
+				width: 36px;
+				height: 50px;
+				position: absolute;
+				left: 5px;
+				top: 130px;
+				background: #000000;
+				color: #b7b6b2;
+				text-align: center;
+				font-weight: bold;
+				border: none;
+				font-size: 28px;
+				filter: alpha(opacity40);
+				opacity: 0.4;
+			}
+			
+			#next {
+				width: 36px;
+				height: 50px;
+				position: absolute;
+				right: 5px;
+				top: 130px;
+				background: #000000;
+				color: #b7b6b2;
+				text-align: center;
+				font-weight: bold;
+				border: none;
+				font-size: 28px;
+				filter: alpha(opacity40);
+				opacity: 0.4;
+			}
+			
+			#text {
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				width: 550px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				background: #000000;
+				color: #FFFFFF;
+				filter: alpha(opacity60);
+				opacity: 0.6;
+				margin: 0;
+			}
+			
+			#span1 {
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				width: 550px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				background: #000000;
+				color: #FFFFFF;
+				filter: alpha(opacity60);
+				opacity: 0.6;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="bg">
+			<div class="content">
+				<div class="lie">
+					<img src="img/images/lie_03.png">
+				</div>
+				<div class="con">
+					<input id="xun" type="button" value="循环切换" />
+					<input id="sun" type="button" value="顺序切换" />
+					<div class="xia">
+						<div class="tu">
+							<img src="img/images/t1_03.png" id="img">
+							<input type="button" value="<" id="prve" />
+							<input type="button" value=">" id="next" />
+							<p id="text">1/4</p>
+							<span id="span1">装甲车</span>
+						</div>
+
+					</div>
+				</div>
+				<div class="miao">
+					<img src="img/images/miao_06.png">
+				</div>
+			</div>
+		</div>
+		<script>
+			//知识点 n++ 自增加一
+			var xun = document.getElementById('xun');
+			var sun = document.getElementById('sun');
+			var next = document.getElementById('next');
+			var img = document.getElementById('img');
+			var oText = document.getElementById('text');
+			var oSpan = document.getElementById('span1');
+			var arr = ["img/images/t1_03.png", "img/images/t2_03.png", "img/images/t3_03.png", "img/images/t4_03.png"];
+			var arrTxet = ['装甲车', '机器人', '大飞机', '外星人']
+			var n = 0;
+			var state = true;
+			xun.onclick = function() {
+				state = true;
+			}
+			sun.onclick = function() {
+				state = false;
+			}
+			next.onclick = function() {
+				if(state) {
+					//n=n+1
+					n++;
+					//n不能超过数组长度减一
+					if(n > arr.length - 1) {
+						n = 0;
+					}
+					img.src = arr[n];
+				} else {
+					n++; // 无论图片切换没有，n一直在加
+					// 顺序
+					if(n > arr.length - 1) {
+						// n就定在最后一张图的下标上 length-1
+						n = arr.length - 1;
+						alert("没有图片了");
+					} else {
+						img.src = arr[n];
+					}
+				}
+				oSpan.innerHTML = n + 1 + '/' + arrTxet.length;
+				oText.innerHTML = arrTxet[n]
+			}
+			prve.onclick = function() {
+				if(state) {
+					//n=n+1
+					n--;
+					//如果n小于0，n为arr.length-1；
+					if(n < 0) {
+						n = arr.length - 1;
+					}
+					img.src = arr[n];
+
+				} else {
+					n--;
+					// n最小是0，如果n小于0的时候，就让n为数组的length-1
+
+					if(n < 0) {
+						n = 0;
+						alert("没有图片了");
+					} else {
+						img.src = arr[n];
+					}
+				}
+				oSpan.innerHTML = n + 1 + '/' + arrTxet.length;
+				oText.innerHTML = arrTxet[n]
+			}
+
+			//				next.onclick  = function (){
+			//				n++;  // 无论图片切换没有，n一直在加
+			//
+			//				// 顺序
+			//				if(n > arr.length-1){
+			//					// n就定在最后一张图的下标上 length-1
+			//					n = arr.length-1;
+			//					alert("没有图片了");
+			//				}else {
+			//					img.src = arr[n];
+			//				}
+			//				oSpan.innerHTML=n+1+'/'+arrTxet.length;
+			//				oText.innerHTML=arrTxet[n]
+			//				// img.src = arr[n];
+			//			}
+			//			// 切换上一张
+			//				prve.onclick = function (){
+			//					n--;
+			//					// n最小是0，如果n小于0的时候，就让n为数组的length-1
+			//	
+			//					if( n < 0 ){
+			//						n = 0;
+			//						alert("没有图片了");
+			//					}else{
+			//						img.src = arr[n];
+			//					}
+			//				oSpan.innerHTML=n+1+'/'+arrTxet.length;
+			//				oText.innerHTML=arrTxet[n]
+			//				};	
+			//			}
+		</script>
+
+	</body>
+
+</html>
